@@ -1,0 +1,712 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Car Management API Binar Academy",
+    "description": "A REST API that can be used to manage car data with the authentication feature.",
+    "contact": {
+      "email": "nandajelubis@gmail.com"
+    },
+    "version": "1.0.1"
+  },
+  "servers": [
+    {
+      "url": "https://localhost:8000/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "authentication",
+      "description": "login & register"
+    },
+    {
+      "name": "user",
+      "description": "Related about user"
+    },
+    {
+      "name": "car",
+      "description": "Related about car"
+    }
+  ],
+  "paths": {
+    "/api/v1/car": {
+      "get": {
+        "tags": [
+          "car"
+        ],
+        "summary": "Retrive the list of cars",
+        "description": "To retrive the list of cars",
+        "responses": {
+          "200": {
+            "description": "If data successfully retrived",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "OK"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "cars": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/CarPostResponse"
+                          }
+                        }
+                      }
+                    },
+                    "total": {
+                      "type": "object",
+                      "properties": {
+                        "total": {
+                          "type": "integer",
+                          "format": "int64",
+                          "example": 10
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "if failed to retrive data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "FAIL"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Bad Request"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "car"
+        ],
+        "summary": "Add a new car",
+        "description": "Add a new car",
+        "operationId": "addCar",
+        "requestBody": {
+          "description": "Create a new car",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CarReqBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "OK"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/CarPostResponse"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed opertion",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "FAIL"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Bad Request"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/car/{carId}": {
+      "put": {
+        "tags": [
+          "car"
+        ],
+        "summary": "Update car by ID",
+        "description": "Update car by ID",
+        "operationId": "updateCar",
+        "parameters": [
+          {
+            "name": "carId",
+            "in": "path",
+            "description": "ID of car to return",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Create a new car",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CarReqBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "OK"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "example": "avanza"
+                        },
+                        "price": {
+                          "type": "integer",
+                          "example": 200000
+                        },
+                        "size": {
+                          "type": "string",
+                          "example": "small"
+                        },
+                        "updatedBy": {
+                          "type": "string",
+                          "example": "admin@mail.com"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed opertion",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "FAIL"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Bad Request"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "car"
+        ],
+        "summary": "Find car by id",
+        "description": "Find car by id",
+        "parameters": [
+          {
+            "name": "carId",
+            "in": "path",
+            "description": "ID of car to return",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "OK"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/CarPostResponse"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed opertion",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "FAIL"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Bad Request"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "car"
+        ],
+        "summary": "Delete car by id",
+        "description": "Delete car by id",
+        "parameters": [
+          {
+            "name": "carId",
+            "in": "path",
+            "description": "ID of car to return",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "OK"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed opertion",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "FAIL"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Bad Request"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/user": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Get current authorized user",
+        "description": "Get current authorized user",
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "OK"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/login": {
+      "post": {
+        "tags": [
+          "authentication"
+        ],
+        "summary": "Login",
+        "requestBody": {
+          "description": "Login with email and password",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "OK"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "format": "int64",
+                          "example": 1
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "superadmin@mail.com"
+                        },
+                        "password": {
+                          "type": "string",
+                          "example": "$2a$10$pLMVso373KqFVztb/H5/2eJaSDn1VR37E2N3uIwIURq0QxDEoQWaW"
+                        },
+                        "role": {
+                          "type": "string",
+                          "example": "superadmin"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "example": "2022-10-20 12:33:01.496+07"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "example": "2022-10-20 12:33:01.496+07"
+                        },
+                        "token": {
+                          "type": "string",
+                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJhZG1pbkBtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY2NjM2MTk2OX0.nsNb0L87NzmQNk8FhM-xxcogqqX1SnfqQi95n5EZMJ0"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed opertion",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "FAIL"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Email or password is not identified"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/register/admin": {
+      "post": {
+        "tags": [
+          "authentication"
+        ],
+        "summary": "Register admin",
+        "requestBody": {
+          "description": "Register admin with email and password",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "OK"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/register/member": {
+      "post": {
+        "tags": [
+          "authentication"
+        ],
+        "summary": "Register admin",
+        "requestBody": {
+          "description": "Register admin with email and password",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "OK"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Member"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CarReqBody": {
+        "required": [
+          "name",
+          "price",
+          "size"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "avanza"
+          },
+          "price": {
+            "type": "integer",
+            "example": 200000
+          },
+          "size": {
+            "type": "string",
+            "example": "small"
+          }
+        }
+      },
+      "CarPostResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "avanza"
+          },
+          "price": {
+            "type": "integer",
+            "format": "int64",
+            "example": 200000
+          },
+          "size": {
+            "type": "string",
+            "example": "large"
+          },
+          "isDeleted": {
+            "type": "boolean",
+            "example": false
+          },
+          "createdBy": {
+            "type": "string",
+            "example": "superadmin@mail.com"
+          },
+          "updatedBy": {
+            "type": "string",
+            "example": "superadmin@mail.com"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2022-10-20 12:33:01.496+07"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2022-10-20 12:33:01.496+07"
+          },
+          "deletedBy": {
+            "type": "string",
+            "example": null
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 1
+          },
+          "email": {
+            "type": "string",
+            "example": "admin@mail.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "$2a$10$pLMVso373KqFVztb/H5/2eJaSDn1VR37E2N3uIwIURq0QxDEoQWaW"
+          },
+          "role": {
+            "type": "string",
+            "example": "admin"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2022-10-20 12:33:01.496+07"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2022-10-20 12:33:01.496+07"
+          }
+        }
+      },
+      "Member": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 1
+          },
+          "email": {
+            "type": "string",
+            "example": "member@mail.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "$2a$10$pLMVso373KqFVztb/H5/2eJaSDn1VR37E2N3uIwIURq0QxDEoQWaW"
+          },
+          "role": {
+            "type": "string",
+            "example": "member"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2022-10-20 12:33:01.496+07"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2022-10-20 12:33:01.496+07"
+          }
+        }
+      },
+      "Login": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "member@mail.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "12345"
+          }
+        }
+      }
+    }
+  }
+}

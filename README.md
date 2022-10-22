@@ -23,4 +23,11 @@ and some library / framework :
 - run "npm run develop" in each backend and frontend to run project
 - open "localhost:8000/" and enjoy the project
 
+## Open api documentation
+- 'localhost/8000/api-docs'
+
+### Login Superadmin
+- email : "superadmin@mail.com"
+- password : "12345"
+
 ##### Thank's for your visit

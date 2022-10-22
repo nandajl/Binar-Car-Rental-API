@@ -16,8 +16,8 @@ module.exports = {
         return Car.destroy(id);
       },
     
-      find(id) {
-        return Car.findByPk(id);
+      find(condition) {
+        return Car.findOne({where: condition});
       },
     
       findAll(condition) {

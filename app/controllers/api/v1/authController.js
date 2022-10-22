@@ -65,6 +65,7 @@ module.exports = {
             res.status(403).json({
                 message: "Unauthorized",
             })
+            return;
         }
 
         const token = bearerToken.split('Bearer ')[1];
@@ -82,6 +83,7 @@ module.exports = {
             res.status(403).json({
                 message: "Unauthorized",
             })
+            return;
         }) 
     },
 
@@ -108,6 +110,7 @@ module.exports = {
             res.status(403).json({
                 message: "Unauthorized",
             })
+            return;
         }) 
     },
     authorizeAdmin(req, res, next){
@@ -116,6 +119,7 @@ module.exports = {
             res.status(403).json({
                 message: "Unauthorized",
             })
+            return;
         }
 
         const token = bearerToken.split('Bearer ')[1];
@@ -133,6 +137,7 @@ module.exports = {
             res.status(403).json({
                 message: "Unauthorized",
             })
+            return;
         }) 
     },
 

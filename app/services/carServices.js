@@ -28,6 +28,7 @@ module.exports = {
     },
 
     get(id) {
-        return carRepository.find(id);
+        const condition = {id: id, isDeleted : false}
+        return carRepository.find(condition);
     },
 }
